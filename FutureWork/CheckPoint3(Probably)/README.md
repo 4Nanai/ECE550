@@ -16,7 +16,7 @@
   - tri_32.v (Tristate gates)
 
 ----
-<img src="Structure Diagram.jpeg" alt="Structure Diagram" style="zoom:80%;" />
+<img src="Structure Diagram.jpeg" alt="Structure Diagram" style="zoom:3000%;" />
 
 ## Tasks
 - [x] Implement register.v
