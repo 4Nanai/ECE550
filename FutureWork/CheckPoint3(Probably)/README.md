@@ -18,7 +18,14 @@
 ----
 <img src="Structure Diagram.jpeg" alt="Structure Diagram" style="zoom:3000%;" />
 
+
+
+## Testbench
+![Testbench Diagram](<tb Diagram.png>)
+
+
 ## Tasks
+
 - [x] Implement register.v
 - [x] Add testbench register_tb.v
 - [x] Implement decoder_5_to_32.v
