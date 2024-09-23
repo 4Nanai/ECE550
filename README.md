@@ -1,5 +1,5 @@
 # ECE550D Project  
-**Fundamental Computer System & Engineering **
+**Fundamental Computer System & Engineering**
 
 ⚠**DO NOT PLAGIARIZE** 
 
@@ -13,7 +13,7 @@ After such a long shelve, updates for ADDs will get back on track ~~, thanks to 
 
 - [x] Register group
 
-- [ ] Register file
+- [x] Register file
 
 - [ ] Datapath
 
