@@ -1,13 +1,6 @@
-# Future Work
-**Student Name:** Toshiko Li
-**NetID:** jl1355
+# Work to be Done
 
-## Structure Hierarchy
-**Please see [here](https://github.com/4Nanai/ECE550/tree/master/FutureWork/CheckPoint3(Probably))**
-
-## Work to be Done
-
-CheckPoint 3:
+### CheckPoint 3 (All completed):
 
 - [x] Implement register.v
 - [x] Add testbench register_tb.v
@@ -21,6 +14,6 @@ CheckPoint 3:
 - [x] Add testbench regFile_tb.v
 - [x] Write README file for CheckPoint
 
-CheckPoint 4:
+### CheckPoint 4 (now doing):
 
 - [x] Create new Folder
