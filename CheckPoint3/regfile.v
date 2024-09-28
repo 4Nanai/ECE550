@@ -12,7 +12,6 @@ data_readRegB
     wire [31:0] writeReg;
     decoder_5_to_32 writeDecoder(
         .in(ctrl_writeReg), 
-        .en(1'b1), //Reserved for potential enable signal 
         .out(writeReg)
     );
 
@@ -43,13 +42,11 @@ data_readRegB
 	 wire [31:0] readReg_A, readReg_B;
 	 decoder_5_to_32 read_decoder_A(
 		.in(ctrl_readRegA),
-		.en(1'b1), // reserved for potential enable signal
 		.out(readReg_A)
 	 );
 	 
 	 decoder_5_to_32 read_decoder_B(
 		.in(ctrl_readRegB),
-		.en(1'b1), // reserved for potential enable signal
 		.out(readReg_B)
 	 );
 	 
