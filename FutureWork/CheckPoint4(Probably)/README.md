@@ -16,7 +16,7 @@
 
 - [x] Data Memory
 
-## Inside Datapath
+#### Inside Datapath
 
 - [x] R-type Instruction
 - [x] addi (Add Immediate Number)
