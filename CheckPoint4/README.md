@@ -1,6 +1,8 @@
-# CheckPoint 4 (Probably)
+# CheckPoint 4
 
-**probably has lots of bug!**
+**Hope all bugs are eliminated : )**
+
+
 
 ## Todos
 
@@ -22,11 +24,43 @@
 - [x] addi (Add Immediate Number)
 - [x] sw (Store Word)
 - [x] lw (Load Word)
+- [x] Testbench
+----
+##### Not included in Check Point 4
+
 - [x] ji (Jump Immediate Number) 
+
 - [x] jal (Store *pc + 1* &  Jump Immediate Number)
+
 - [x] jr (Jump to addr register $rd point to)
+
 - [x] beq (Jump to *pc + 1 + N* if dataA == dataB)
+
 - [x] blt (Jump to *pc + 1 + N* if dataA < dataB)
+
 - [ ] bex
+
 - [ ] setx
-- [ ] Testbench
+
+  
+
+## Screen Shots
+
+
+
+![Instructions in imem.mif](/Users/chitose/Library/CloudStorage/OneDrive-DukeUniversity/24Fall/ECE 550D/GitHub/CheckPoint4/ScreenShots/imem.png)
+
+<center>Instructions in imem.mif</center>
+
+
+
+![dmem](/Users/chitose/Library/CloudStorage/OneDrive-DukeUniversity/24Fall/ECE 550D/GitHub/CheckPoint4/ScreenShots/dmem.png)
+
+<center>Data in dmem.mif</center>
+
+
+
+![tb](/Users/chitose/Library/CloudStorage/OneDrive-DukeUniversity/24Fall/ECE 550D/GitHub/CheckPoint4/ScreenShots/simulation.png)
+
+<center>waveform of testbench</center>
+
