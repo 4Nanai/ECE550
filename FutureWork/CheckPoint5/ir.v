@@ -1,5 +1,6 @@
 // Isn't needed in 1 ins/cycle cpu
 // Prepared for pipeline
+// Not used in PC4
 
 module ir #(parameter DWIDTH = 32)( // Instruction Register
 	clk,
