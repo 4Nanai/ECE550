@@ -48,19 +48,19 @@
 
 
 
-![Instructions in imem.mif](/Users/chitose/Library/CloudStorage/OneDrive-DukeUniversity/24Fall/ECE 550D/GitHub/CheckPoint4/ScreenShots/imem.png)
+![Instructions in imem.mif](./ScreenShots/imem.png)
 
 <center>Instructions in imem.mif</center>
 
 
 
-![dmem](/Users/chitose/Library/CloudStorage/OneDrive-DukeUniversity/24Fall/ECE 550D/GitHub/CheckPoint4/ScreenShots/dmem.png)
+![dmem](./ScreenShots/dmem.png)
 
 <center>Data in dmem.mif</center>
 
 
 
-![tb](/Users/chitose/Library/CloudStorage/OneDrive-DukeUniversity/24Fall/ECE 550D/GitHub/CheckPoint4/ScreenShots/simulation.png)
+![tb](./ScreenShots/simulation.png)
 
 <center>waveform of testbench</center>
 
