@@ -15,8 +15,8 @@ module data_path #(parameter DWIDTH = 32)(
 	ctrl_jal,
 	ctrl_jr,
 	
-	/* pc_out and ins(input) <-> processor.v -> skeleton.v (imem_i) */
-	pc_out, //address_imem = pc_out[11:0]
+	/* address_imem and ins(input) <-> processor.v -> skeleton.v (imem_i) */
+	address_imem, //address_imem = pc_out[11:0]
 	ins, // q_imem
 	
 	/* dmem_i */
@@ -89,7 +89,7 @@ module data_path #(parameter DWIDTH = 32)(
 		
 	
 	output [4:0] opcode, rs;
-	output [DWIDTH - 1:0] pc_out; //out to upper level imem
+	output [11:0] address_imem; //out to upper level imem
 	/* input & output wire for register in processor.v */
 	output [4:0] ctrl_writeReg, //ctrl_writeReg
 					ctrl_readRegB; //ctrl_readRegB
@@ -108,7 +108,8 @@ module data_path #(parameter DWIDTH = 32)(
 
 
 	/* instantiate pc */
-	wire [DWIDTH - 1:0] pc_in;
+	wire [DWIDTH - 1:0] pc_in, pc_out;
+	assign address_imem = pc_out[11:0];
 	
 	pc pc_i(
 		.clk(clk),

@@ -63,4 +63,3 @@
 ![tb](./ScreenShots/simulation.png)
 
 <center>waveform of testbench</center>
-
