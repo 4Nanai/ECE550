@@ -71,31 +71,35 @@ module processor(
     data_readRegA,                  // I: Data from port A of regfile
     data_readRegB                   // I: Data from port B of regfile
 );
+		
+	 localparam DWIDTH = 32;
+    localparam opWIDTH = 5;
+	 localparam addrWIDTH = 12;
+	 
     // Control signals
     input clock, reset;
 
     // Imem
-    output [11:0] address_imem;
-    input [31:0] q_imem;
+    output [addrWIDTH - 1:0] address_imem;
+    input [DWIDTH - 1:0] q_imem;
 
     // Dmem
-    output [11:0] address_dmem;
-    output [31:0] data;
+    output [addrWIDTH - 1:0] address_dmem;
+    output [DWIDTH - 1:0] data;
     output wren;
-    input [31:0] q_dmem;
+    input [DWIDTH - 1:0] q_dmem;
 
     // Regfile
     output ctrl_writeEnable;
-    output [4:0] ctrl_writeReg, ctrl_readRegA, ctrl_readRegB;
-    output [31:0] data_writeReg;
-    input [31:0] data_readRegA, data_readRegB;
+    output [opWIDTH - 1:0] ctrl_writeReg, ctrl_readRegA, ctrl_readRegB;
+    output [DWIDTH - 1:0] data_writeReg;
+    input [DWIDTH - 1:0] data_readRegA, data_readRegB;
 
     /* YOUR CODE STARTS HERE */
 
-    localparam DWIDTH = 32;
-    localparam AddrWIDTH = 5;
 
-    wire [AddrWIDTH - 1:0] opcode; //operation code from decoder in data_path.v
+
+    wire [opWIDTH - 1:0] opcode; //operation code from decoder in data_path.v
 
     /* Control Signal */
     wire en_pc, //enable signal for programme counter
@@ -159,7 +163,7 @@ module processor(
         .ctrl_jr(ctrl_jr),
         
         /* pc_out and ins(input) <-> processor.v -> skeleton.v (imem_i) */
-        .pc_out(address_imem), //address_imem = pc_out[11:0]
+        .address_imem(address_imem), //address_imem = pc_out[11:0]
         .ins(q_imem), // q_imem
         
         /* dmem_i */
@@ -171,6 +175,7 @@ module processor(
         //en_writeReg, //en_writeReg should be implemented in processor.v
         .ctrl_writeReg(ctrl_writeReg),
         .ctrl_readRegB(ctrl_readRegB),
+        .ctrl_readRegA(ctrl_readRegA),
         //ctrl_readRegA = rs
         .data_writeReg(data_writeReg), //data_writeReg
         .data_readRegA(data_readRegA), //data_readRegA
@@ -178,8 +183,8 @@ module processor(
         
         
         /* output from decoder in data_path.v */
-        .opcode(opcode),  
-        .rs(ctrl_readRegA)
+        .opcode(opcode)
+        
     );
 
 
@@ -214,9 +219,7 @@ module processor(
     //implement signal sel_alu_dataB
     or sel_alu_inB(
         sel_alu_dataB,
-        opcode_extend[2], //bne $rd, $rs, N 
         opcode_extend[5], //addi $rd, $rs, N 
-        opcode_extend[6], //blt $rd, $rs, N 
         opcode_extend[7], //sw $rd, N($rs) 
         opcode_extend[8]  //lw $rd, N($rs) 
     );
