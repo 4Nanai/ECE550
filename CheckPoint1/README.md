@@ -1,7 +1,4 @@
 # ECE550D Simple ALU CheckPoint 1
-**Student Name:** Toshiko Li
-**NetID:** jl1355
-
 ## Structure Hierarchy
 
 **My hierarchical structure tree:**

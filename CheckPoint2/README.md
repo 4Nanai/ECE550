@@ -1,11 +1,5 @@
 # ECE550D Full ALU CheckPoint 2
 
-**Student Name:** Toshiko Li
-
-**NetID:** jl1355
-
-
-
 ## CP2 Structure Hierarchy
 
 The **alu** module is composed of several submodules that work together to execute a range of arithmetic and logical operations. Based on the input **ctrl_ALUopcode[2:0]**, the **dataResultSelect** module is responsible for choosing the appropriate operation result for output.

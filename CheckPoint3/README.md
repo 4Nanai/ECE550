@@ -1,7 +1,4 @@
 # Probably a CheckPoint
-**Student Name:** Toshiko Li
-**NetID:** jl1355
-
 ## Structure Hierarchy
 ### **regfile.v - Register File Design**
 
