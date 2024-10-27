@@ -9,13 +9,13 @@ After such a long shelve, updates for ADDs will get back on track ~~, thanks to 
 
 - [x] Full ALU (specific operations are [here](https://github.com/4Nanai/ECE550/tree/master/CheckPoint2) in CP2.)
 
-- [x] Register File (see implementation at [here](https://github.com/4Nanai/ECE550/tree/master/CheckPoint3) in CP3.)
+- [x] Register File (see implementation [here](https://github.com/4Nanai/ECE550/tree/master/CheckPoint3) in CP3.)
 
-- [ ] Datapath
+- [x] Datapath (see implementation in CP5)
 
-- [ ] Control
+- [x] Control (see implementation in CP5)
 
-- [ ] Pipeline
+- [x] CPU_top (see implementation in CP5)
 
 - [ ] FPGA verification
 

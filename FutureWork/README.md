@@ -35,6 +35,6 @@
 - [x] jr (Jump to addr register $rd point to)
 - [x] beq (Jump to *pc + 1 + N* if dataA == dataB)
 - [x] blt (Jump to *pc + 1 + N* if dataA < dataB)
-- [ ] bex
-- [ ] setx
-- [ ] Testbench
+- [x] bex
+- [x] setx
+- [x] Testbench
