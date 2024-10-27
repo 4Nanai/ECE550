@@ -14,7 +14,7 @@
 - [x] Add testbench regFile_tb.v
 - [x] Write README file for CheckPoint
 
-### CheckPoint 4 (now doing):
+### CheckPoint 4 & 5:
 
 - [x] Create new Folder
 - [x] Program Counter
@@ -38,3 +38,9 @@
 - [x] bex
 - [x] setx
 - [x] Testbench
+
+### CheckPoint 6 (now doing):
+
+- [ ] fpga verification 
+
+- [ ] Game design
