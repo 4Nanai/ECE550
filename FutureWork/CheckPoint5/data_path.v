@@ -84,6 +84,8 @@ module data_path #(parameter DWIDTH = 32)(
 		
 		//[opcode -> bne] =>
 		//ctrl_Bne = 1
+		//ALUopcode = 1(sub)
+		//ctrl_readRegB = $rd
 		ctrl_Blt; //jump to pc = pc + 1 + N if dataA < dataB
 		
 		
@@ -177,7 +179,7 @@ module data_path #(parameter DWIDTH = 32)(
 	//sw(sw needs to read $rd and store $rd to $rs + immed) &
 	//Bne(Bne needs to read $rd to to sub in alu)
 	assign ctrl_readRegB = (ctrl_jr | ctrl_sw)? rd: (ctrl_Bne | ctrl_Blt)? rs: rt;
-	assign pc_in = ctrl_jr? data_readRegB: ctrl_ji? ext_ji_imme_num: cndt_branch;
+	assign pc_in = ctrl_jr? data_readRegB: (ctrl_ji | ctrl_jal)? ext_ji_imme_num: cndt_branch;
 	//end of jr
 	
 
