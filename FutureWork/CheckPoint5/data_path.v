@@ -148,7 +148,7 @@ module data_path #(parameter DWIDTH = 32)(
 	wire isNotEqual, isLessThan;
 	and (in_sel_beqJump, ctrl_Bne, isNotEqual);
 	assign cndt_branch = in_sel_isBranch? pcAddImme_cndt: pcSelfAdd;
-	assign ctrl_readRegA = (ctrl_Bne | ctrl_Bne)? rd: rs;
+	assign ctrl_readRegA = (ctrl_Bne | ctrl_Blt)? rd: rs;
 	//assign pc_in = cndt_branch;
 	//end of beq implementation
 	
@@ -280,7 +280,7 @@ module data_path #(parameter DWIDTH = 32)(
 	/* instantiate alu */
 	wire [DWIDTH - 1:0] alu_dataA, alu_dataB, alu_dataOut, alu_dmem_data;
 	assign alu_dataA = data_readRegA;
-	assign sel_ALUop = ctrl_addi? 5'd0: ctrl_Bne? 5'd1: ctrl_ALUop;
+	assign sel_ALUop = ctrl_addi? 5'd0: (ctrl_Bne | ctrl_Blt)? 5'd1: ctrl_ALUop;
 
 	and is_alu_add(
 		is_add,
