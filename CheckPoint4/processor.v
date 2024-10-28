@@ -143,18 +143,7 @@ module processor(
 		
 		//[opcode -> blt] =>
 		//ctrl_Blt = 1
-		ctrl_Blt, //jump to pc = pc + 1 + N if dataA < dataB
-
-		//bex T[opcode[22] -> bex(10110)] =>
-		//ctrl_bex = 1
-		//ALUopcode = 1(sub)
-		ctrl_Bex, //if $31 != 0, jump to T
-
-		//[opcode -> setx] =>
-		//ctrl_setx = 1
-		//data_writeReg = T
-		//ctrl_writeReg = $30
-		ctrl_setx;
+		ctrl_Blt; //jump to pc = pc + 1 + N if dataA < dataB
 
     data_path data_path_i(
         .clk(clock),
@@ -172,8 +161,6 @@ module processor(
         .ctrl_ji(ctrl_ji),
         .ctrl_jal(ctrl_jal),
         .ctrl_jr(ctrl_jr),
-        .ctrl_Bex(ctrl_Bex),
-        .ctrl_setx(ctrl_setx),
         
         /* pc_out and ins(input) <-> processor.v -> skeleton.v (imem_i) */
         .address_imem(address_imem), //address_imem = pc_out[11:0]
@@ -188,7 +175,6 @@ module processor(
         //en_writeReg, //en_writeReg should be implemented in processor.v
         .ctrl_writeReg(ctrl_writeReg),
         .ctrl_readRegB(ctrl_readRegB),
-        .ctrl_readRegA(ctrl_readRegA),
         //ctrl_readRegA = rs
         .data_writeReg(data_writeReg), //data_writeReg
         .data_readRegA(data_readRegA), //data_readRegA
@@ -196,8 +182,8 @@ module processor(
         
         
         /* output from decoder in data_path.v */
-        .opcode(opcode)
-        
+        .opcode(opcode),  
+        .rs(ctrl_readRegA)
     );
 
 
@@ -221,8 +207,8 @@ module processor(
         opcode_extend[0], //All R type ins
         opcode_extend[3], //jal T
         opcode_extend[5], //addi $rd, $rs, N 
-        opcode_extend[8], //lw $rd, N($rs) 
-        opcode_extend[21] //setx (JI type)
+        opcode_extend[8] //lw $rd, N($rs) 
+        //opcode_extend[21] //setx (JI type) not implemented
     );
 
 
@@ -232,7 +218,9 @@ module processor(
     //implement signal sel_alu_dataB
     or sel_alu_inB(
         sel_alu_dataB,
+        opcode_extend[2], //bne $rd, $rs, N 
         opcode_extend[5], //addi $rd, $rs, N 
+        opcode_extend[6], //blt $rd, $rs, N 
         opcode_extend[7], //sw $rd, N($rs) 
         opcode_extend[8]  //lw $rd, N($rs) 
     );
@@ -265,14 +253,8 @@ module processor(
     //implement signal ctrl_sw
     assign ctrl_sw = opcode_extend[7]; //sw $rd, N($rs)
 
-    //implement signal ctrl_jr
+    //implement signal 
     assign ctrl_jr = opcode_extend[4]; //jr $rd
-
-    //implement signal ctrl_Bex
-    assign ctrl_Bex = opcode_extend[22]; //bex T (PC = T)
-
-    //implement signal ctrl_setx
-    assign ctrl_setx = opcode_extend[21]; //setx T
 
 
 endmodule

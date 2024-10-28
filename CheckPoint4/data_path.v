@@ -14,9 +14,7 @@ module data_path #(parameter DWIDTH = 32)(
 	ctrl_ji,
 	ctrl_jal,
 	ctrl_jr,
-	ctrl_Bex,
-	ctrl_setx,
-
+	
 	/* address_imem and ins(input) <-> processor.v -> skeleton.v (imem_i) */
 	address_imem, //address_imem = pc_out[11:0]
 	ins, // q_imem
@@ -30,14 +28,15 @@ module data_path #(parameter DWIDTH = 32)(
 	//en_writeReg, //en_writeReg should be implemented in processor.v
 	ctrl_writeReg,
 	ctrl_readRegB,
-	ctrl_readRegA,
+	//ctrl_readRegA = rs
 	data_writeReg, //data_writeReg
 	data_readRegA, //data_readRegA
 	data_readRegB, //data_readRegB
 	
 	
 	/* output from decoder in data_path.v */
-	opcode
+	opcode, 
+	rs
 );
 
 	input clk, rst;
@@ -68,8 +67,6 @@ module data_path #(parameter DWIDTH = 32)(
 		
 		//[opcode -> bne] =>
 		//ctrl_Bne = 1
-		//ALUopcode = 1(sub)
-		//ctrl_readRegB = $rd
 		ctrl_Bne, //ctrl pc to jump if dataA == dataB
 		
 		//[opcode -> ji] =>
@@ -84,32 +81,18 @@ module data_path #(parameter DWIDTH = 32)(
 		//ctrl_jr = 1
 		ctrl_jr, //jump register $d (ctrl_readRegB = rd)
 		
-		//[opcode -> blt] =>
-		//ctrl_Blt = 1
-		//ALUopcode = 1(sub)
-		//ctrl_readRegB = $rd
-		ctrl_Blt, //jump to pc = pc + 1 + N if dataA < dataB
-
-		//bex T[opcode[22] -> bex(10110)] =>
-		//ctrl_bex = 1
-		//ALUopcode = 1(sub)
-		ctrl_Bex, //if $31 != 0, jump to T
-
-		//[opcode -> setx] =>
-		//ctrl_setx = 1
-		//data_writeReg = T
-		//ctrl_writeReg = $30
-		ctrl_setx;
+		//[opcode -> bne] =>
+		//ctrl_Bne = 1
+		ctrl_Blt; //jump to pc = pc + 1 + N if dataA < dataB
 		
 		
 		
 	
-	output [4:0] opcode;
+	output [4:0] opcode, rs;
 	output [11:0] address_imem; //out to upper level imem
 	/* input & output wire for register in processor.v */
 	output [4:0] ctrl_writeReg, //ctrl_writeReg
-					ctrl_readRegB, //ctrl_readRegB
-					ctrl_readRegA; //ctrl_readRegA
+					ctrl_readRegB; //ctrl_readRegB
 	output [DWIDTH - 1:0] data_writeReg;
 	input [DWIDTH - 1:0] data_readRegA, data_readRegB;
 	
@@ -117,7 +100,7 @@ module data_path #(parameter DWIDTH = 32)(
 
 
 
-	wire [4:0] rd, rs, rt; //declaration of dest reg & targ reg
+	wire [4:0] rd, rt; //declaration of dest reg & targ reg
 	wire [DWIDTH - 1: 0] data_writeBack; //data write back to regfile
 	wire [26:0] ji_tar; //ji target immed number
 
@@ -141,7 +124,7 @@ module data_path #(parameter DWIDTH = 32)(
 	wire [DWIDTH - 1: 0] pcSelfAdd,
 		pcAddImme_cndt, //conditional branch jump to 16-bit imme_num
 		cndt_branch; 
-	wire in_sel_beqJump, is_Bex;
+	wire in_sel_beqJump;
 	
 	adder_32bit pc_selfAdder_i(
 		.a(pc_out), 
@@ -162,9 +145,7 @@ module data_path #(parameter DWIDTH = 32)(
 	wire in_sel_isBranch; //internal sel signal if is branch
 	wire isNotEqual, isLessThan;
 	and (in_sel_beqJump, ctrl_Bne, isNotEqual);
-	and (is_Bex, ctrl_Bex, isNotEqual);
 	assign cndt_branch = in_sel_isBranch? pcAddImme_cndt: pcSelfAdd;
-	assign ctrl_readRegA = is_Bex? 5'd0: (ctrl_Bne | ctrl_Blt)? rd: rs;
 	//assign pc_in = cndt_branch;
 	//end of beq implementation
 	
@@ -183,17 +164,15 @@ module data_path #(parameter DWIDTH = 32)(
 	
 	//implement Jal (store pc+1 then ji) (not used in PC4)
 	wire overflow, is_add, is_sub; //implement overflow write $rstatus
-	assign ctrl_writeReg = ctrl_jal? 5'd31:((overflow & (is_add | is_sub | ctrl_addi)) | ctrl_setx)? 5'd30: rd;
-	assign data_writeReg = ctrl_setx? ext_ji_imme_num: ctrl_jal? pcSelfAdd: data_writeBack;
+	assign ctrl_writeReg = ctrl_jal? 5'd31:(overflow & (is_add | is_sub | ctrl_addi))? 5'd30: rd;
+	assign data_writeReg = ctrl_jal? pcSelfAdd: data_writeBack;
 	//set ctrl_ji = 1 to jump imme_num
 	//end of Jal
 	
 	//implement jr (jump to addr in register $d) (not used in PC4)
-	//ctrl_jr also helps in 
-	//sw(sw needs to read $rd and store $rd to $rs + immed) &
-	//Bne(Bne needs to read $rd to to sub in alu)
-	assign ctrl_readRegB = ctrl_Bex? 5'd30: (ctrl_jr | ctrl_sw)? rd: (ctrl_Bne | ctrl_Blt)? rs: rt;
-	assign pc_in = ctrl_jr? data_readRegB: (ctrl_ji | ctrl_jal | is_Bex)? ext_ji_imme_num: cndt_branch;
+	//ctrl_jr also helps in sw(sw needs to read $rd)
+	assign ctrl_readRegB = (ctrl_jr | ctrl_sw)? rd: rt;
+	assign pc_in = ctrl_jr? data_readRegB: ctrl_ji? ext_ji_imme_num: cndt_branch;
 	//end of jr
 	
 
@@ -296,7 +275,7 @@ module data_path #(parameter DWIDTH = 32)(
 	/* instantiate alu */
 	wire [DWIDTH - 1:0] alu_dataA, alu_dataB, alu_dataOut, alu_dmem_data;
 	assign alu_dataA = data_readRegA;
-	assign sel_ALUop = ctrl_addi? 5'd0: (ctrl_Bne | ctrl_Blt | ctrl_Bex)? 5'd1: ctrl_ALUop;
+	assign sel_ALUop = ctrl_addi? 5'd0: ctrl_ALUop;
 
 	and is_alu_add(
 		is_add,
