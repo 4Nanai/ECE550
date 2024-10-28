@@ -12,7 +12,7 @@ module skeleton_tb();
         reset = 1'b0;
     end
 
-    always #200 clock = ~clock;
+    always #20 clock = ~clock;
 
     initial begin
         @(posedge clock);
@@ -20,7 +20,7 @@ module skeleton_tb();
         @(posedge clock);
         @(posedge clock);
         reset = 1'b0;
-        #36000
+        #10000
         $stop;
     end
 endmodule

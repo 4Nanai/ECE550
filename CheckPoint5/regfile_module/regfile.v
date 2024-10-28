@@ -25,9 +25,17 @@ data_readRegB
 
     /* RegFile generation */
     wire [31:0] regFileOut [31:0];
-
+	 
+	 reg_group_32 regFile0(
+		 .d(32'd0),
+		 .en(en_Reg[0]),
+		 .clk(clock),
+		 .rst(ctrl_reset),
+		 .q(regFileOut[0][31:0])
+	 );
+	 
     generate
-        for (i = 0; i < 32; i = i + 1) begin: gen_regFile
+        for (i = 1; i < 32; i = i + 1) begin: gen_regFile
             reg_group_32 regFile(
                 .d(data_writeReg), 
                 .en(en_Reg[i]), 
