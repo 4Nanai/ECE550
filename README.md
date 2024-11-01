@@ -11,11 +11,11 @@ After such a long shelve, updates for ADDs will get back on track ~~, thanks to 
 
 - [x] Register File (see implementation [here](https://github.com/4Nanai/ECE550/tree/master/CheckPoint3) in CP3.)
 
-- [x] Datapath (see implementation in CP5)
+- [x] Datapath (see full implementation in [CP5](https://github.com/4Nanai/ECE550/tree/master/CheckPoint5))
 
-- [x] Control (see implementation in CP5)
+- [x] Control (see full implementation in [CP5](https://github.com/4Nanai/ECE550/tree/master/CheckPoint5))
 
-- [x] CPU_top (see implementation in CP5)
+- [x] CPU_top (see full implementation in [CP5](https://github.com/4Nanai/ECE550/tree/master/CheckPoint5))
 
 - [ ] FPGA verification
 
