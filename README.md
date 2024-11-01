@@ -11,9 +11,9 @@ After such a long shelve, updates for ADDs will get back on track ~~, thanks to 
 
 - [x] Register File (see implementation [here](https://github.com/4Nanai/ECE550/tree/master/CheckPoint3) in CP3.)
 
-- [x] Datapath (see full implementation in [CP5](https://github.com/4Nanai/ECE550/tree/master/CheckPoint5))
+- [x] Datapath (see full implementation in [CP5/data_path.v](https://github.com/4Nanai/ECE550/blob/master/CheckPoint5/data_path.v))
 
-- [x] Control (see full implementation in [CP5](https://github.com/4Nanai/ECE550/tree/master/CheckPoint5))
+- [x] Control (see full implementation in [CP5/processor.v](https://github.com/4Nanai/ECE550/blob/master/CheckPoint5/processor.v))
 
 - [x] CPU_top (see full implementation in [CP5](https://github.com/4Nanai/ECE550/tree/master/CheckPoint5))
 
